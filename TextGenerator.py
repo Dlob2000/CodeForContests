@@ -1,4 +1,5 @@
 import random
+import re
 
 class TextGenerator:
     
@@ -6,8 +7,8 @@ class TextGenerator:
         self.d = dict()
     
     def fit(self, text):
-        text = text.replace(",", "").replace("\n", " ").replace(".", "").replace("?", "").lower()
-        text = text.split(" ")
+        reg = re.compile("\w+")
+        text = reg(text)
         prev = None
         for word in text:
             if prev:
