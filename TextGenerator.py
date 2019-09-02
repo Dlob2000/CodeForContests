@@ -6,9 +6,15 @@ class TextGenerator:
     def __init__(self):
         self.d = dict()
     
-    def fit(self, text):
+
+    def _parse_text(self, text):
         reg = re.compile("\w+")
-        text = reg(text)
+        return reg.findall(text)
+
+    def fit(self, text):
+        if type(text) == str:
+            text = self._parse_text(text)
+        
         prev = None
         for word in text:
             if prev:
@@ -22,15 +28,22 @@ class TextGenerator:
         return self.d
     
     def generate(self, long):
-        first = random.choice(list(self.d.keys())).title()
+        first = random.choice(list(self.d.keys()))
         current = first
         string = ""
+        is_title = True
         for i in range(long):
-            if current.lower() in self.d.keys():
-                a = random.choice(self.d[current.lower()])
-                string += "{} ".format(a)
+            if current in self.d.keys():
+                a = random.choice(self.d[current])
+                if is_title:
+                    string += "{} ".format(current.title())
+                else:
+                    string += "{} ".format(current)
                 current = a
+                is_title = False
             else:
-                string += ". "
+                print(string, current)
+                string = string[0:-1] + ". "
                 current = random.choice(list(self.d.keys())).title()
-        return string
+                is_title = True
+        return string[0:-1] + "."
