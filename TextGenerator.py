@@ -1,19 +1,28 @@
 import random
 import re
+import pickle
 
 class TextGenerator:
     
     def __init__(self):
         self.d = dict()
     
+    def save(self):
+        with open('data.pickle', 'wb') as f:
+            pickle.dump(self, f)
+
+    def load(self):
+        with open('data.pickle', 'rb') as f:
+            a = pickle.load(f)
+        self.d = a.get_d()
 
     def _parse_text(self, text):
         reg = re.compile("\w+")
         return reg.findall(text)
 
-    def fit(self, text):
-        if type(text) == str:
-            text = self._parse_text(text)
+    def fit(self, path):
+        with open(path, 'r') as f:
+            text = f.read()
         
         prev = None
         for word in text:
