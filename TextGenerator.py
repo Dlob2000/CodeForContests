@@ -43,7 +43,7 @@ class TextGenerator:
         is_title = True
         for i in range(long):
             if current in self.d.keys():
-                a = random.choice(self.d[current])
+                a = random.choice(self.d[current])               
                 if is_title:
                     string += "{} ".format(current.title())
                 else:
@@ -52,6 +52,6 @@ class TextGenerator:
                 is_title = False
             else:
                 string = string[0:-1] + ". "
-                current = random.choice(list(self.d.keys())).title()
+                current = random.choice(list(self.d.keys()))
                 is_title = True
         return string[0:-1] + "."
