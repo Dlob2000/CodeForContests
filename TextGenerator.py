@@ -21,8 +21,8 @@ class TextGenerator:
         return reg.findall(text)
 
     def fit(self, path):
-        with open(path, 'r') as f:
-            text = f.read()
+        with open(path, 'r', encoding="utf-8") as f:
+            text = self._parse_text(f.read())
         
         prev = None
         for word in text:
@@ -51,7 +51,6 @@ class TextGenerator:
                 current = a
                 is_title = False
             else:
-                print(string, current)
                 string = string[0:-1] + ". "
                 current = random.choice(list(self.d.keys())).title()
                 is_title = True
